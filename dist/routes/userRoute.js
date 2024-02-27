@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const authController_1 = require("../controllers/authController");
 const userController_1 = require("../controllers/userController");
 const userRouter = express_1.default.Router();
-userRouter.post('/register', userController_1.signUp);
+userRouter.post('/signup', userController_1.signUp);
 userRouter.post('/login', userController_1.login);
 userRouter.patch('/Update/:id', authController_1.isAuthenticated, userController_1.updateProfile);
 userRouter.patch('/reset_Password/:Token', authController_1.isAuthenticated, userController_1.resetPassword);

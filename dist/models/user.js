@@ -81,7 +81,7 @@ userSchema.pre('save', function (next) {
         this.password = yield bcrypt_1.default.hash(this.password, 12);
     });
 });
-userSchema.methods.isValidPassword = function (candidatePassword, userPassword) {
+userSchema.methods.checkValidPassword = function (candidatePassword, userPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield bcrypt_1.default.compare(candidatePassword, userPassword);
     });

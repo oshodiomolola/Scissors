@@ -6,16 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-// import { userRouter } from './routes/userRoute';
-const userRoute_1 = __importDefault(require("./routes/userRoute"));
+const qrcodeController_1 = __importDefault(require("./controllers/qrcodeController"));
 dotenv_1.default.config();
 function createServer() {
     const server = (0, express_1.default)();
     server.use(body_parser_1.default.json());
-    server.get("/", (req, res) => {
-        res.send("Yaaaay!! get your short url with Scissors!!!");
+    server.use(body_parser_1.default.urlencoded({ extended: true }));
+    server.get('/', (req, res) => {
+        res.send('Yaaaay!! get your short url with Scissors!!!');
     });
-    server.use("/users", userRoute_1.default);
+    server.get('/qrcode', qrcodeController_1.default.generateQRCode);
     return server;
 }
 exports.default = createServer;

@@ -14,7 +14,7 @@ import {
 
 const userRouter = express.Router();
 
-userRouter.post('/register', signUp);
+userRouter.post('/signup', signUp);
 userRouter.post('/login', login);
 userRouter.patch('/Update/:id', isAuthenticated, updateProfile);
 userRouter.patch('/reset_Password/:Token', isAuthenticated, resetPassword);

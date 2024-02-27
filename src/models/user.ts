@@ -22,6 +22,7 @@ interface UserDocument extends Document {
   createResetToken(): Promise<string>;
 }
 
+
 const userSchema = new Schema<UserDocument>({
   email: {
     type: String,
@@ -65,12 +66,13 @@ userSchema.pre<UserDocument>('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
 });
 
-userSchema.methods.isValidPassword = async function (
+userSchema.methods.checkValidPassword = async function (
   candidatePassword: string,
   userPassword: string
 ): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
+
 
 userSchema.methods.createResetToken = async function (): Promise<string> {
   const resetToken = Math.floor(Math.random() * 1000000) + 1;
