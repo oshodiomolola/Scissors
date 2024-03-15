@@ -5,6 +5,7 @@ import appError from "../utils/errorHandler";
 import EmailSender from "../utils/email";
 import SendResponse from "../utils/sendResponse";
 
+
 async function signUp(
   req: Request,
   res: Response,

@@ -27,11 +27,14 @@ const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         else if (req.cookies && req.cookies.jwt) {
             token = req.cookies.jwt;
         }
+        console.log(process.env.JWT_SECRET_KEY);
         if (!token) {
             return next(new errorHandler_1.default('Unauthorized', 401));
         }
         const decodedToken = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY);
         const currentTime = Math.floor(Date.now() / 1000);
+        console.log(token);
+        console.log(decodedToken);
         // console.log(currentTime);
         // console.log(decodedToken.iat);
         if (decodedToken.iat > currentTime) {

@@ -18,7 +18,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 (0, dotenv_1.config)();
 function jwtToken(payload) {
     return __awaiter(this, void 0, void 0, function* () {
-        const token = yield jsonwebtoken_1.default.sign({ id: payload }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+        const token = yield jsonwebtoken_1.default.sign({ id: payload }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRATION });
         return token;
     });
 }

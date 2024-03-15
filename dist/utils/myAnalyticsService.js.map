@@ -1,0 +1,1 @@
+{"version":3,"file":"myAnalyticsService.js","sourceRoot":"","sources":["../../src/utils/myAnalyticsService.ts"],"names":[],"mappings":";;;AAEA,MAAa,kBAAkB;IAC7B,UAAU,CAAC,SAAiB,EAAE,SAA8B;QAC1D,oDAAoD;QACpD,OAAO,CAAC,GAAG,CAAC,mBAAmB,SAAS,EAAE,EAAE,SAAS,CAAC,CAAC;IACzD,CAAC;CACF;AALD,gDAKC"}

@@ -9,11 +9,11 @@ const userController_1 = require("../controllers/userController");
 const userRouter = express_1.default.Router();
 userRouter.post('/signup', userController_1.signUp);
 userRouter.post('/login', userController_1.login);
-userRouter.patch('/Update/:id', authController_1.isAuthenticated, userController_1.updateProfile);
+userRouter.patch('/update/:id', authController_1.isAuthenticated, userController_1.updateProfile);
 userRouter.patch('/reset_Password/:Token', authController_1.isAuthenticated, userController_1.resetPassword);
 userRouter.post('/forget_Password', authController_1.isAuthenticated, userController_1.forgetPassword);
 userRouter.delete('/Deactivate_acct/:id', authController_1.isAuthenticated, userController_1.deleteAccount);
 userRouter.post('/reactivate_account', userController_1.reactivateAccount);
-userRouter.post('/ logout', authController_1.isAuthenticated, userController_1.logout);
+userRouter.post('/logout', authController_1.isAuthenticated, userController_1.logout);
 exports.default = userRouter;
 //# sourceMappingURL=userRoute.js.map

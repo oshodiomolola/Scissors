@@ -10,13 +10,14 @@ const isAuthenticated = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    let token: string | undefined = '';
+    let token: string = '';
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer')) {
       token = authHeader.split(' ')[1];
     } else if (req.cookies && req.cookies.jwt) {
       token = req.cookies.jwt;
     }
+    console.log(process.env.JWT_SECRET_KEY)
     if (!token) {
       return next(new AppError('Unauthorized', 401));
     }
@@ -25,6 +26,9 @@ const isAuthenticated = async (
       process.env.JWT_SECRET_KEY as string
     ) as { id: string; iat: number };
     const currentTime = Math.floor(Date.now() / 1000);
+    console.log(token)
+    console.log(decodedToken)
+    
     // console.log(currentTime);
     // console.log(decodedToken.iat);
     if (decodedToken.iat > currentTime) {
@@ -67,5 +71,6 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
     next(new AppError(err, 500));
   }
 };
+
 
 export { isAuthenticated, isLoggedIn };
