@@ -8,6 +8,7 @@ import createServer from './app';
 import userRouter from './routes/userRoute';
 import qrcodeRoute from './routes/qrcodeRoute';
 import analyticsRoute from './routes/analyticsRouter';
+import viewRouter from './routes/viewsRoute';
 
 
 const PORT: number = 8000;
@@ -19,9 +20,11 @@ const app = createServer();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.static(path.join(__dirname, "public")))
 app.use('/users', userRouter);
 app.use('/qrcode', qrcodeRoute);
 app.use('/analytics', analyticsRoute);
+app.use("/views", viewRouter)
 
 app.get("/", (req: Request, res: Response) => {
   res.render("index");

@@ -1,0 +1,23 @@
+:root {
+  --primary-300-base: #0065fe;
+  --primary-400-base: #005ae2;
+  --white: #ffffff;
+  --text-color-main-text: #141414;
+  --off-white: #f9fbfd;
+  --neutral-white: #fff;
+  --neutral-900: #071827;
+  --neutral-800: #112232;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: gilroy-bold, sans-serif;
+}
+
+.index1 {
+color: red
+}
+
+
+

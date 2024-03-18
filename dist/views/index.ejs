@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/views/style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <link
       href="https://fonts.cdnfonts.com/css/gilroy-bold?styles=20876,20878,20879"
       rel="stylesheet"
@@ -13,11 +13,11 @@
     <title>home</title>
   </head>
   <body>
-    <h1>Welcome to Scissors!</h1>
+    <h1 class="index1">Welcome to Scissors!</h1>
 
     <div class="container">
       <h2>Signup</h2>
-      <form action="/signup" method="POST">
+      <form class="signupForm" action="/signup" method="POST">
         <label for="name">Username:</label>
         <input type="text" id="name" name="name" required />
         <label for="email">Email:</label>
@@ -28,7 +28,6 @@
       </form>
     </div>
 
-    <script type="module" src="index.js"></script>
+    <script type="module" src="/client/signup.js"></script>
   </body>
 </html>
-
