@@ -1,40 +1,36 @@
-const formEl = document.querySelector(".signupForm");
-const userEl = document.querySelector("#name");
+const formEl = document.querySelector(".loginForm");
 const userEmail = document.querySelector("#email");
 const userPass = document.querySelector("#password");
 console.log(formEl)
-async function signup(username, email, password) {
+async function login(email, password) {
   try {
-  const response = await fetch("http://localhost:8000/users/signup", {
+  const response = await fetch("http://localhost:8000/users/login", {
     method: "POST",
-    body: JSON.stringify({email, username, password}),
+    body: JSON.stringify({email, password}),
     headers: {"Content-Type": "application/json"} 
   })
   console.log(response)
-  // console.log(JSON.stringify({email, username, password}))
+  // console.log(JSON.stringify({email, password}))
   if (response.ok) {
     const data = await response.json()
     console.log(data)
 
     window.setTimeout(() => {
-      location.assign('/views/login');
+      location.assign('/views/shortenUrl');
     }, 1000);
 
-  } else {console.log("error")}
+  } else {throw new Error(response.statusText)}
     
   } catch (err) {
 console.log(err)
 // console.log(err.response.json)
   }
-
 }
 
 
 formEl.addEventListener("submit", async (e)=> {
   e.preventDefault()
-  const username = userEl.value
   const email = userEmail.value
   const password = userPass.value
-  await signup( username, email, password)
+  await login(email, password)
 })
-

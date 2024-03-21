@@ -25,11 +25,9 @@ app.use('/users', userRoute_1.default);
 app.use('/qrcode', qrcodeRoute_1.default);
 app.use('/analytics', analyticsRouter_1.default);
 app.use("/views", viewsRoute_1.default);
-app.get("/", (req, res) => {
-    res.render("index");
-});
-// app.post("auth/login", (req, res)=> {
-// })
+// app.get("/", (req: Request, res: Response) => {
+//   res.render("index");
+// });
 app.listen(PORT, HOSTNAME, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });

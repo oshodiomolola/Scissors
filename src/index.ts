@@ -26,14 +26,12 @@ app.use('/qrcode', qrcodeRoute);
 app.use('/analytics', analyticsRoute);
 app.use("/views", viewRouter)
 
-app.get("/", (req: Request, res: Response) => {
-  res.render("index");
-});
+// app.get("/", (req: Request, res: Response) => {
+//   res.render("index");
+// });
 
 
-// app.post("auth/login", (req, res)=> {
-  
-// })
+
 
 app.listen(PORT, HOSTNAME, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
