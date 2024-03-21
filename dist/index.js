@@ -23,6 +23,9 @@ app.set('views', path_1.default.join(__dirname, 'views'));
 app.get("/", (req, res) => {
     res.render("signup");
 });
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use('/users', userRoute_1.default);
 app.use('/qrcode', qrcodeRoute_1.default);

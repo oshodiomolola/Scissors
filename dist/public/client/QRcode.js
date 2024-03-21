@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    // Send text to backend to generate QR code
     generateQRCode(text);
   });
 
@@ -24,9 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.blob();
     })
     .then(blob => {
-      // Create a URL for the blob
       const imageUrl = URL.createObjectURL(blob);
-      // Display the generated QR code
       qrCodeContainer.innerHTML = `<img src="${imageUrl}" alt="QR Code">`;
     })
     .catch(error => {

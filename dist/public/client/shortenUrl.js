@@ -1,50 +1,45 @@
-const shortenedUrlElement = document.getElementById('.shortenedUrl');
-shortenedUrlElement.textContent = ""; 
-shortenedUrlElement.style.display = "none"; 
+document.addEventListener('DOMContentLoaded', function() {
+  const shortenedUrlElement = document.getElementById('shortenedUrl'); 
+  const formEl = document.querySelector('#yourFormId');
 
-async function shortenUrl(event) {
-  event.preventDefault();
-  const urlInput = document.querySelector('#urlInput').value.trim();
-  const shortenedUrlElement = document.querySelector('.shortenedUrl');
+  // formEl.addEventListener("submit", shortenUrl);
 
-  if (!urlInput) {
-    document.querySelector('#urlInputFeedback').textContent = "URL cannot be empty";
-    return;
-  } else {
-    document.querySelector('#urlInputFeedback').textContent = "";
-  }
+  async function shortenUrl(event) {
+    event.preventDefault();
+    const urlInput = document.querySelector('#urlInput').value.trim();
 
-  shortenedUrlElement.textContent = 'Shortening URL...';
-
-  try {
-    const response = await fetch("http://localhost:8000/users/shortenUrl", {
-      method: 'POST',
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        originalUrl: urlInput,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to shorten URL");
+    if (!urlInput) {
+      document.querySelector('#urlInputFeedback').textContent = "URL cannot be empty";
+      return;
+    } else {
+      document.querySelector('#urlInputFeedback').textContent = "";
     }
 
-    const data = await response.json();
-    console.log(data)
-    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl
-console.log(shortenedUrlElement.textContent)
+    shortenedUrlElement.textContent = 'Shortening URL...';
 
-window.setTimeout(() => {
-  location.assign('/views/qrcode');
-}, 1000);
+    try {
+      const response = await fetch("http://localhost:8000/users/shortenUrl", {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          originalUrl: urlInput,
+        }),
+      });
 
+      if (!response.ok) {
+        throw new Error("Failed to shorten URL");
+      }
 
-  } catch (error) {
-    shortenedUrlElement.textContent = 'Error: ' + error.message;
+      const data = await response.json();
+      shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
+
+      setTimeout(() => {
+        location.assign('/views/qrcode');
+      }, 1000);
+    } catch (error) {
+      shortenedUrlElement.textContent = 'Error: ' + error.message;
+    }
   }
-}
-
-const formEl = document.querySelector('#yourFormId');
-formEl.addEventListener("submit", shortenUrl);
+});
 
   

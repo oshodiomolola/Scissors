@@ -25,6 +25,11 @@ app.get("/", (req: Request, res: Response) => {
   res.render("signup");
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+
 app.use(express.static(path.join(__dirname, "public")))
 app.use('/users', userRouter);
 app.use('/qrcode', qrcodeRoute);

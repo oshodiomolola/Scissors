@@ -27,7 +27,6 @@ console.log(err)
   }
 }
 
-
 formEl.addEventListener("submit", async (e)=> {
   e.preventDefault()
   const email = userEmail.value
