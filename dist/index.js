@@ -26,6 +26,9 @@ app.get("/", (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 });
+// app.get('/shortenUrl', (req, res) => {
+//   res.render('shortenUrl');
+// });
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use('/users', userRoute_1.default);
 app.use('/qrcode', qrcodeRoute_1.default);

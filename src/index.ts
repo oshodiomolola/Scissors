@@ -29,6 +29,10 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+// app.get('/shortenUrl', (req, res) => {
+//   res.render('shortenUrl');
+// });
+
 
 app.use(express.static(path.join(__dirname, "public")))
 app.use('/users', userRouter);
