@@ -4,7 +4,7 @@ const userPass = document.querySelector("#password");
 console.log(formEl)
 async function login(email, password) {
   try {
-  const response = await fetch("http://localhost:8000/login", {
+  const response = await fetch("http://localhost:8000/signup/login", {
     method: "POST",
     body: JSON.stringify({email, password}),
     headers: {"Content-Type": "application/json"} 
@@ -26,6 +26,7 @@ console.log(err)
 // console.log(err.response.json)
   }
 }
+
 
 formEl.addEventListener("submit", async (e)=> {
   e.preventDefault()
