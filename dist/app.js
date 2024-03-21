@@ -10,11 +10,11 @@ const qrcodeController_1 = __importDefault(require("./controllers/qrcodeControll
 dotenv_1.default.config();
 function createServer() {
     const server = (0, express_1.default)();
+    // server.get('/', (req: Request, res: Response) => {
+    //     res.send('Yaaaay!! get your short url with Scissors!!!');
+    //   });
     server.use(body_parser_1.default.json());
     server.use(body_parser_1.default.urlencoded({ extended: true }));
-    // server.get('/', (req: Request, res: Response) => {
-    //   res.send('Yaaaay!! get your short url with Scissors!!!');
-    // });
     server.get('/qrcode', qrcodeController_1.default.generateQRCode);
     return server;
 }

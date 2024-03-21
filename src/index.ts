@@ -20,15 +20,16 @@ const app = createServer();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
+app.get("/", (req: Request, res: Response) => {
+  res.render("signup");
+});
+
 app.use(express.static(path.join(__dirname, "public")))
 app.use('/users', userRouter);
 app.use('/qrcode', qrcodeRoute);
 app.use('/analytics', analyticsRoute);
-app.use("/views", viewRouter)
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.render("index");
-// });
+app.use("/views", viewRouter);
 
 
 

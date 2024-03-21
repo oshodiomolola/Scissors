@@ -30,8 +30,14 @@ async function shortenUrl(event) {
     }
 
     const data = await response.json();
-    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
-console.log(data)
+    console.log(data)
+    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl
+console.log(shortenedUrlElement.textContent)
+
+window.setTimeout(() => {
+  location.assign('/views/qrcode');
+}, 1000);
+
 
   } catch (error) {
     shortenedUrlElement.textContent = 'Error: ' + error.message;

@@ -1,11 +1,10 @@
-// src/routes/qrcodeRoute.ts
-
 import express from 'express';
 import QRCodeController from '../controllers/qrcodeController';
 
-const router = express.Router();
+const qrRouter = express.Router();
 
-router.get('/generate', QRCodeController.generateQRCode);
+qrRouter.get('/generate', QRCodeController.generateQRCode);
 
-export default router;
+export default qrRouter;
+
 

@@ -20,14 +20,14 @@ const HOSTNAME = '0.0.0.0';
 const app = (0, app_1.default)();
 app.set('view engine', 'ejs');
 app.set('views', path_1.default.join(__dirname, 'views'));
+app.get("/", (req, res) => {
+    res.render("signup");
+});
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use('/users', userRoute_1.default);
 app.use('/qrcode', qrcodeRoute_1.default);
 app.use('/analytics', analyticsRouter_1.default);
 app.use("/views", viewsRoute_1.default);
-// app.get("/", (req: Request, res: Response) => {
-//   res.render("index");
-// });
 app.listen(PORT, HOSTNAME, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });

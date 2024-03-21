@@ -8,14 +8,13 @@ dotenv.config();
 function createServer() {
   const server = express();
 
+// server.get('/', (req: Request, res: Response) => {
+//     res.send('Yaaaay!! get your short url with Scissors!!!');
+//   });
+
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
 
-  // server.get('/', (req: Request, res: Response) => {
-  //   res.send('Yaaaay!! get your short url with Scissors!!!');
-  // });
-
- 
   server.get('/qrcode', qrcodeController.generateQRCode);
 
   return server;
