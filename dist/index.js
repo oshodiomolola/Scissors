@@ -23,7 +23,7 @@ app.set('views', path_1.default.join(__dirname, 'views'));
 app.get("/", (req, res) => {
     res.render("signup");
 });
-app.get('/login', (req, res) => {
+app.get('login', (req, res) => {
     res.render('login');
 });
 // app.get('/shortenUrl', (req, res) => {

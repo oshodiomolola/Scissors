@@ -25,7 +25,7 @@ app.get("/", (req: Request, res: Response) => {
   res.render("signup");
 });
 
-app.get('/login', (req, res) => {
+app.get('login', (req, res) => {
   res.render('login');
 });
 
