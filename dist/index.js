@@ -32,7 +32,7 @@ app.get('/login', (req, res) => {
 // });
 app.use((0, cors_1.default)());
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:8000/users/signup'
+    origin: '/users/signup'
 }));
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use('/users', userRoute_1.default);

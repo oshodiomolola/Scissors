@@ -8,7 +8,7 @@ const userconfirm = document.querySelector("#confirmPassword")
 console.log(formEl)
 async function signup(username, email, password, confirmPassword) {
   try {
-  const response = await fetch("http://localhost:8000/users/signup", {
+  const response = await fetch("/users/signup", {
     method: "POST",
     body: JSON.stringify({email, username, password, confirmPassword}),
     headers: {"Content-Type": "application/json"} 

@@ -36,7 +36,7 @@ app.get('/login', (req, res) => {
 app.use(cors());
 
 app.use(cors({
-  origin: 'http://localhost:8000/users/signup'
+  origin: '/users/signup'
 }));
 
 
