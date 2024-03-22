@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function generateQRCode(text) {
-    fetch(`/generate?text=${encodeURIComponent(text)}`)
+    fetch(`/users/generate?text=${encodeURIComponent(text)}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to generate QR code');
