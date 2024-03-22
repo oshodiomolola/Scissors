@@ -15,9 +15,9 @@ async function login(email, password) {
     const data = await response.json()
     console.log(data)
 
-    // window.setTimeout(() => {
-    //   location.assign('/views/shortenUrl');
-    // }, 1000);
+    window.setTimeout(() => {
+      location.assign('/views/shortenUrl');
+    }, 1000);
 
   } else {throw new Error(response.statusText)}
     
