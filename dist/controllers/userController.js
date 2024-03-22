@@ -22,6 +22,10 @@ function signUp(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const body = req.body;
+            const userExist = (yield user_1.userModel.findOne({ email: req.body.email }));
+            if (userExist) {
+                return next(new errorHandler_1.default("User already exist", 400));
+            }
             const newUser = (yield user_1.userModel.create(body));
             if (!newUser) {
                 return next(new errorHandler_1.default("Please fill in correct details", 400));

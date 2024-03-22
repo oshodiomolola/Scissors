@@ -12,7 +12,12 @@ async function signUp(
   next: NextFunction
 ): Promise<void> {
   try {
-    const body = req.body;
+    const body = req.body as {email: string}
+    const userExist = (await userModel.findOne({email: req.body.email}))
+    if (userExist) {
+      return next(new appError("User already exist", 400));
+      
+    }
     const newUser = (await userModel.create(body)) as UserDocument;
 
     if (!newUser) {
