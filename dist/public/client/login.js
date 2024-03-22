@@ -4,7 +4,7 @@ const userPass = document.querySelector("#password");
 console.log(formEl)
 async function login(email, password) {
   try {
-  const response = await fetch("http://localhost:8000/signup/login", {
+  const response = await fetch("http://localhost:8000/users/login", {
     method: "POST",
     body: JSON.stringify({email, password}),
     headers: {"Content-Type": "application/json"} 
@@ -15,9 +15,9 @@ async function login(email, password) {
     const data = await response.json()
     console.log(data)
 
-    window.setTimeout(() => {
-      location.assign('/views/shortenUrl');
-    }, 1000);
+    // window.setTimeout(() => {
+    //   location.assign('/views/shortenUrl');
+    // }, 1000);
 
   } else {throw new Error(response.statusText)}
     

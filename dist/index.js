@@ -14,6 +14,7 @@ const userRoute_1 = __importDefault(require("./routes/userRoute"));
 const qrcodeRoute_1 = __importDefault(require("./routes/qrcodeRoute"));
 const analyticsRouter_1 = __importDefault(require("./routes/analyticsRouter"));
 const viewsRoute_1 = __importDefault(require("./routes/viewsRoute"));
+const cors_1 = __importDefault(require("cors"));
 const PORT = 8000;
 const HOSTNAME = '0.0.0.0';
 (0, config_1.mongoDbConnection)();
@@ -29,6 +30,10 @@ app.get('/login', (req, res) => {
 // app.get('/shortenUrl', (req, res) => {
 //   res.render('shortenUrl');
 // });
+app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:8000/users/signup'
+}));
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 app.use('/users', userRoute_1.default);
 app.use('/qrcode', qrcodeRoute_1.default);

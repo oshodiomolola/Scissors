@@ -9,7 +9,7 @@ import userRouter from './routes/userRoute';
 import qrcodeRoute from './routes/qrcodeRoute';
 import analyticsRoute from './routes/analyticsRouter';
 import viewRouter from './routes/viewsRoute';
-
+import cors from "cors"
 
 const PORT: number = 8000;
 const HOSTNAME: string = '0.0.0.0';
@@ -32,6 +32,12 @@ app.get('/login', (req, res) => {
 // app.get('/shortenUrl', (req, res) => {
 //   res.render('shortenUrl');
 // });
+
+app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:8000/users/signup'
+}));
 
 
 app.use(express.static(path.join(__dirname, "public")))

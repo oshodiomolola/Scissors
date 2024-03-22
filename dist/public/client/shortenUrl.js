@@ -36,9 +36,9 @@ async function shortenUrl(event) {
   }
 }
 
-// Attach the shortenUrl function to the form's submit event
+
 document.addEventListener('DOMContentLoaded', function() {
-  const formEl = document.querySelector('#yourFormId');
+  const formEl = document.querySelector('#urlInput');
   formEl.addEventListener("submit", shortenUrl);
 });
 
