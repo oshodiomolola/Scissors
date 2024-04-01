@@ -20,7 +20,7 @@ urlRouter.use((req, res, next) => {
         next();
     }
 });
-urlRouter.post('/createUrl', authController_1.isAuthenticated, urlController_1.createShortUrl);
+urlRouter.post('/createUrl', urlController_1.createShortUrl);
 urlRouter.get('/findAll', authController_1.isAuthenticated, urlController_1.findAllMyUrl);
 urlRouter.patch('/updateUrl/:shortId', authController_1.isAuthenticated, urlController_1.updateUrl);
 urlRouter.delete('/deleteUrl/:id', authController_1.isAuthenticated, urlController_1.deleteUrl);

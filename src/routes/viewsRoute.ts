@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import shortid from 'shortid';
 const viewRouter = express.Router();
 
 viewRouter.get("/", (req, res)=> {
@@ -10,7 +11,7 @@ viewRouter.get("/login", (req, res)=> {
 })
 
 viewRouter.get("/shortenUrl", (req, res)=> {
-  res.status(200).render("shortenUrl")
+  res.status(200).render("shortenUrl", { shortUrl: shortid})
 })
 
 export default  viewRouter

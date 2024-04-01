@@ -67,6 +67,7 @@ async function login(
     const token = await jwtToken(isValidUser._id);
 
     res.cookie("jwt", token, { httpOnly: true });
+    (req as any).user= isValidUser
     res
       .status(200)
       .json({

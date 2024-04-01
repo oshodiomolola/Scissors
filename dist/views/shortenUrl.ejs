@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-  <link rel="stylesheet" href="/styles/shortenUrl.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/styles/shortenUrl.css" />
     <link
       href="https://fonts.cdnfonts.com/css/gilroy-bold?styles=20876,20878,20879"
-      rel="stylesheet"/>
- 
-  <title>Shortening URL</title>
-</head>
-<body>
-  <div class="container">
-    <!-- <form id="yourFormId"></form> -->
-    <form id="urlForm" onsubmit="shortenedUrl(event)">
-      <div class="input-group">
-        <input type="url" id="urlInput" placeholder="Enter URL to shorten" required>
-        <button type="submit">Shorten URL</button>
-      </div>
-    </form>
-    <div id="shortenedUrl" class="shortened-url" style="display: none;"></div>
-  </div>
+      rel="stylesheet"
+    />
 
-  <script type="module" src="/client/shortenUrl.js"></script>
-</body>
+    <title>Shortening URL</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <form id="yourFormId"></form> -->
+      <form id="urlForm" action="/shorten/createUrl" method="post">
+        <div class="input-group">
+          <input
+          name="originalUrl"
+            type="url"
+            id="urlInput"
+            placeholder="Enter URL to shorten"
+            required
+          />
+          <button type="submit">Shorten URL</button>
+        </div>
+      </form>
+
+       <% if (shortUrl) { %> 
+      <div id="shortenedUrl" class="shortened-url">
+        this is my short Url: <a href="http://localhost:8000/shorten/<%= shortUrl %>">http://localhost:8000/shorten/<%= shortUrl %></a>
+      </div>
+
+      <% } else { %>
+      <div id="shortenedUrl" class="shortened-url" style="display: none"></div>
+
+      <% } %>
+    </div> 
+
+    <script type="module" src="/client/shortenUrl.js"></script>
+  </body>
 </html>

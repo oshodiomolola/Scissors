@@ -14,10 +14,15 @@ async function login(email, password) {
   if (response.ok) {
     const data = await response.json()
     console.log(data)
+    if(data !== null) {
+      localStorage.setItem("token", data.token)
 
-    window.setTimeout(() => {
+      window.setTimeout(() => {
       location.assign('/views/shortenUrl');
     }, 1000);
+    } else {return new Error("error occured")} 
+
+    
 
   } else {throw new Error(response.statusText)}
     

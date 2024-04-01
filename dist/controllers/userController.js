@@ -63,6 +63,7 @@ function login(req, res, next) {
             }
             const token = yield (0, jwt_1.jwtToken)(isValidUser._id);
             res.cookie("jwt", token, { httpOnly: true });
+            req.user = isValidUser;
             res
                 .status(200)
                 .json({
