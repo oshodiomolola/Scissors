@@ -21,32 +21,58 @@ async function shortenUrl(event) {
   }
 
   shortenedUrlElement.textContent = 'Shortening URL...';
+  console.log(localStorage.getItem("token"))
 
   try {
     const response = await fetch("/shorten/createUrl", {
       method: 'POST',
-      headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json"},
+      headers: {
+        "Authorization": `Bearer ${token}`, // Authorization header with bearer token
+        "Content-Type": "application/json" // Content type header specifying JSON format
+      },
       body: JSON.stringify({
-        originalUrl: urlInput,
+        originalUrl: urlInput, // Request body containing the original URL to be shortened
       }),
     });
-
+  
     if (!response.ok) {
-      throw new Error("Failed to shorten URL");
+      throw new Error("Failed to shorten URL"); // Throw an error if response is not ok
     }
+  
+    const data = await response.json(); // Parse JSON response
+    console.log(data); // Log response data
+    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl; // Update shortened URL element with the shortened URL
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the fetch request
+  }
+}
+  
 
-    const data = await response.json();
-    console.log(data)
-    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
+  // try {
+  //   const response = await fetch("/shorten/createUrl", {
+  //     method: 'POST',
+  //     headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       originalUrl: urlInput,
+  //     }),
+  //   });
+
+  //   if (!response.ok) {
+  //     throw new Error("Failed to shorten URL");
+  //   }
+
+  //   const data = await response.json();
+  //   console.log(data)
+  //   shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
 
     // setTimeout(() => {
     //   location.assign('/views/qrcode');
     // }, 1000);
-  } catch (error) {
-    // shortenedUrlElement.textContent = 'Error: ' + error.message;
-    console.log(error)
-  }
-}
+//   } catch (error) {
+//     // shortenedUrlElement.textContent = 'Error: ' + error.message;
+//     console.log(error)
+//   }
+// }
 
 document.addEventListener('DOMContentLoaded', function() {
   const formEl = document.querySelector('#urlInput');
@@ -109,6 +135,4 @@ document.addEventListener('DOMContentLoaded', function() {
 // document.addEventListener('DOMContentLoaded', function() {
 //   const formEl = document.querySelector('#urlInput');
 //   formEl.addEventListener("submit", shortenUrl);
-// });
-
-  
+// })

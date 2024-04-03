@@ -67,43 +67,26 @@ async function createShortUrl(req: Request, res: Response, next: NextFunction) {
     const body = req.body;
     if (!body.originalUrl) next(new AppError("Your Original Url Pls!", 400));
     console.log((req as any).user)
-    // const existingLink = await UrlModel.findOne({
-    //   userId: (req as any).user._id,
-    //   originalUrl: body.originalUrl,
-    // });
-    // if (existingLink) {
-    //   return next(new AppError("This link has been shortened", 400));
-    // } else {
-    //   body.shortUrl = shortId.generate();
-    //   body.userId = (req as any).user._id;
-    //   const url: string = `${(req as any).protocol}://${(req as any).get(
-    //     "host"
-    //   )}/${body.shortUrl}`;
-    //   body.newUrl = url;
-    //   const newDoc = await UrlModel.create(body);
-
-    //   // res.render("shortenUrl", {
-    //   //   shortUrl: newDoc.shortUrl,
-    //   // });
-    //   res
-    //     .status(201)
-    //     .json({ status: 'success', message: 'New Link Created', newDoc });
-    // }
-
-    body.shortUrl = shortId.generate();
-    // body.userId = (req as any).user._id;
-    const url: string = `${(req as any).protocol}://${(req as any).get(
-      "host"
-    )}/${body.shortUrl}`;
-    body.newUrl = url;
-    const newDoc = await UrlModel.create(body);
-
-    res.render("shortenUrl", {
-      shortUrl: newDoc.shortUrl,
+    const existingLink = await UrlModel.findOne({
+      userId: (req as any).user._id,
+      originalUrl: body.originalUrl,
     });
-    // res
-    //   .status(201)
-    //   .json({ status: 'success', message: 'New Link Created', newDoc });
+    if (existingLink) {
+      return next(new AppError("This link has been shortened", 400));
+    } else {
+      body.shortUrl = shortId.generate();
+      body.userId = (req as any).user._id;
+      const url: string = `${(req as any).protocol}://${(req as any).get(
+        "host"
+      )}/shorten/${body.shortUrl}`;
+      body.newUrl = url;
+      const newDoc = await UrlModel.create(body);
+
+      res
+        .status(201)
+        .json({ status: 'success', message: 'New Link Created', newDoc });
+    }
+
 
   } catch (err: any) {
     next(new AppError(err, 500));

@@ -25,7 +25,7 @@ urlRouter.use((req, res, next) => {
   }
 });
 
-urlRouter.post('/createUrl', createShortUrl);
+urlRouter.post('/createUrl', isAuthenticated, createShortUrl);
 urlRouter.get('/findAll', isAuthenticated, findAllMyUrl);
 urlRouter.patch('/updateUrl/:shortId', isAuthenticated, updateUrl);
 urlRouter.delete('/deleteUrl/:id', isAuthenticated, deleteUrl);

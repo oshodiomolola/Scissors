@@ -78,38 +78,23 @@ function createShortUrl(req, res, next) {
             if (!body.originalUrl)
                 next(new errorHandler_1.default("Your Original Url Pls!", 400));
             console.log(req.user);
-            // const existingLink = await UrlModel.findOne({
-            //   userId: (req as any).user._id,
-            //   originalUrl: body.originalUrl,
-            // });
-            // if (existingLink) {
-            //   return next(new AppError("This link has been shortened", 400));
-            // } else {
-            //   body.shortUrl = shortId.generate();
-            //   body.userId = (req as any).user._id;
-            //   const url: string = `${(req as any).protocol}://${(req as any).get(
-            //     "host"
-            //   )}/${body.shortUrl}`;
-            //   body.newUrl = url;
-            //   const newDoc = await UrlModel.create(body);
-            //   // res.render("shortenUrl", {
-            //   //   shortUrl: newDoc.shortUrl,
-            //   // });
-            //   res
-            //     .status(201)
-            //     .json({ status: 'success', message: 'New Link Created', newDoc });
-            // }
-            body.shortUrl = shortid_1.default.generate();
-            // body.userId = (req as any).user._id;
-            const url = `${req.protocol}://${req.get("host")}/${body.shortUrl}`;
-            body.newUrl = url;
-            const newDoc = yield shortenUrl_1.UrlModel.create(body);
-            res.render("shortenUrl", {
-                shortUrl: newDoc.shortUrl,
+            const existingLink = yield shortenUrl_1.UrlModel.findOne({
+                userId: req.user._id,
+                originalUrl: body.originalUrl,
             });
-            // res
-            //   .status(201)
-            //   .json({ status: 'success', message: 'New Link Created', newDoc });
+            if (existingLink) {
+                return next(new errorHandler_1.default("This link has been shortened", 400));
+            }
+            else {
+                body.shortUrl = shortid_1.default.generate();
+                body.userId = req.user._id;
+                const url = `${req.protocol}://${req.get("host")}/shorten/${body.shortUrl}`;
+                body.newUrl = url;
+                const newDoc = yield shortenUrl_1.UrlModel.create(body);
+                res
+                    .status(201)
+                    .json({ status: 'success', message: 'New Link Created', newDoc });
+            }
         }
         catch (err) {
             next(new errorHandler_1.default(err, 500));
