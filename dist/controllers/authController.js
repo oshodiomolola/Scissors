@@ -35,8 +35,6 @@ const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         const currentTime = Math.floor(Date.now() / 1000);
         console.log(token);
         console.log(decodedToken);
-        // console.log(currentTime);
-        // console.log(decodedToken.iat);
         if (decodedToken.iat > currentTime) {
             return next(new errorHandler_1.default('Token expired', 401));
         }
@@ -57,20 +55,27 @@ exports.isAuthenticated = isAuthenticated;
 const isLoggedIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!req.cookies.jwt) {
-            return next(new errorHandler_1.default('kindly login or sign up', 401));
+            return next(new errorHandler_1.default('Please log in or sign up', 401));
         }
-        else if (req.cookies.jwt) {
-            const decodedToken = jsonwebtoken_1.default.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
-            const currentTime = Math.floor(Date.now() / 1000);
-            const user = yield user_1.userModel.findById(decodedToken.id);
-            if (user && decodedToken.iat < currentTime)
-                res.locals.user = user;
-            return next();
+        const decodedToken = jsonwebtoken_1.default.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (!decodedToken ||
+            decodedToken.exp === undefined ||
+            decodedToken.iat === undefined) {
+            return next(new errorHandler_1.default('Invalid token', 401));
         }
+        if (decodedToken.exp < currentTime) {
+            return next(new errorHandler_1.default('Session expired, please log in again', 401));
+        }
+        const user = yield user_1.userModel.findById(decodedToken.id);
+        if (!user) {
+            return next(new errorHandler_1.default('User not found', 401));
+        }
+        res.locals.user = user;
         next();
     }
     catch (err) {
-        next(new errorHandler_1.default(err, 500));
+        return next(new errorHandler_1.default('Authentication failed', 401));
     }
 });
 exports.isLoggedIn = isLoggedIn;

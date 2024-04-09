@@ -23,12 +23,12 @@ function RedirectUrl(req, res, next) {
             const shortenedUrlDoc = yield shortenUrl_1.UrlModel.findOne({ shortUrl: shortId });
             console.log(shortenedUrlDoc);
             if (!shortenedUrlDoc) {
-                return next(new errorHandler_1.default("No Url was found", 404));
+                return next(new errorHandler_1.default('No Url was found', 404));
             }
             if (shortenedUrlDoc.visitationCount === undefined ||
                 shortenedUrlDoc.whoVisited === undefined ||
                 shortenedUrlDoc.originalUrl === undefined) {
-                return next(new errorHandler_1.default("Invalid Url Document", 500));
+                return next(new errorHandler_1.default('Invalid Url Document', 500));
             }
             shortenedUrlDoc.visitationCount += 1;
             shortenedUrlDoc.whoVisited.push(req.ip);
@@ -45,23 +45,23 @@ function updateUrl(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!req.user.active === true)
-                return next(new errorHandler_1.default("Login or Sign up again", 401));
+                return next(new errorHandler_1.default('Login or Sign up again', 401));
             if (!req.body)
                 return next(new errorHandler_1.default(`New name can't be blank`, 400));
             const findUrl = yield shortenUrl_1.UrlModel.findOne({
                 shortUrl: req.params.shortId,
             });
             if (!findUrl || findUrl === null)
-                return next(new errorHandler_1.default("Nothing is found", 404));
+                return next(new errorHandler_1.default('Nothing is found', 404));
             if (findUrl.userId._id.toString() !== req.user._id.toString())
-                return next(new errorHandler_1.default("You are not authorized to perform this action", 401));
+                return next(new errorHandler_1.default('You are not authorized to perform this action', 401));
             findUrl.shortUrl = req.body ? req.body.shortUrl : findUrl.shortUrl;
-            const newUrl = `${req.protocol}://${req.get("host")}/${findUrl.shortUrl}`;
+            const newUrl = `${req.protocol}://${req.get('host')}/${findUrl.shortUrl}`;
             findUrl.newUrl = newUrl;
             yield findUrl.save();
             res.status(200).json({
-                status: "success",
-                message: "update successfull",
+                status: 'success',
+                message: 'update successfull',
                 updatedUrl: findUrl,
             });
         }
@@ -76,21 +76,21 @@ function createShortUrl(req, res, next) {
         try {
             const body = req.body;
             if (!body.originalUrl)
-                next(new errorHandler_1.default("Your Original Url Pls!", 400));
-            console.log(req.user);
+                next(new errorHandler_1.default('Your Original Url Pls!', 400));
             const existingLink = yield shortenUrl_1.UrlModel.findOne({
                 userId: req.user._id,
                 originalUrl: body.originalUrl,
             });
             if (existingLink) {
-                return next(new errorHandler_1.default("This link has been shortened", 400));
+                return next(new errorHandler_1.default('This link has been shortened', 400));
             }
             else {
                 body.shortUrl = shortid_1.default.generate();
                 body.userId = req.user._id;
-                const url = `${req.protocol}://${req.get("host")}/shorten/${body.shortUrl}`;
+                const url = `${req.protocol}://${req.get('host')}/shorten/${body.shortUrl}`;
                 body.newUrl = url;
                 const newDoc = yield shortenUrl_1.UrlModel.create(body);
+                console.log(newDoc);
                 res
                     .status(201)
                     .json({ status: 'success', message: 'New Link Created', newDoc });
@@ -106,18 +106,18 @@ function deleteUrl(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!req.user.active === true)
-                return next(new errorHandler_1.default("Login or Sign up again", 401));
+                return next(new errorHandler_1.default('Login or Sign up again', 401));
             const findUrl = yield shortenUrl_1.UrlModel.findOne({
                 _id: req.params.id,
             });
             if (!findUrl || findUrl === null)
-                return next(new errorHandler_1.default("Url does not exist", 404));
+                return next(new errorHandler_1.default('Url does not exist', 404));
             if (findUrl.userId._id.toString() !== req.user._id.toString())
-                return next(new errorHandler_1.default("You are not authorized to perform this action", 401));
+                return next(new errorHandler_1.default('You are not authorized to perform this action', 401));
             const deleteUrl = yield shortenUrl_1.UrlModel.deleteOne({ _id: req.params.id });
             res
                 .status(200)
-                .json({ status: "success", message: "You have deleted this Url" });
+                .json({ status: 'success', message: 'You have deleted this Url' });
         }
         catch (err) {
             next(new errorHandler_1.default(err.message, 500));
@@ -130,15 +130,15 @@ function findAllMyUrl(req, res, next) {
         try {
             const userID = req.user._id || req.query.id;
             if (!req.user.active === true)
-                return next(new errorHandler_1.default("Login or Sign up again", 401));
+                return next(new errorHandler_1.default('Login or Sign up again', 401));
             const data = yield shortenUrl_1.UrlModel.find({ userId: userID }).sort({
                 createdAt: -1,
             });
             if (!data || data.length === 0)
-                return next(new errorHandler_1.default("No Url link was found!", 404));
+                return next(new errorHandler_1.default('No Url link was found!', 404));
             res.status(200).json({
-                status: "success",
-                message: "This is a list of Your Urls",
+                status: 'success',
+                message: 'This is a list of Your Urls',
                 size: data.length,
                 data,
             });

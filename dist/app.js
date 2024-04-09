@@ -7,14 +7,13 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const qrcodeController_1 = __importDefault(require("./controllers/qrcodeController"));
+const cookieParser = require("cookie-parser");
 dotenv_1.default.config();
 function createServer() {
     const server = (0, express_1.default)();
-    // server.get('/', (req: Request, res: Response) => {
-    //     res.send('Yaaaay!! get your short url with Scissors!!!');
-    //   });
     server.use(body_parser_1.default.json());
     server.use(body_parser_1.default.urlencoded({ extended: true }));
+    server.use(cookieParser());
     server.get('/qrcode', qrcodeController_1.default.generateQRCode);
     return server;
 }
