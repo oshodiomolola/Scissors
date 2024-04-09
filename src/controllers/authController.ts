@@ -17,7 +17,7 @@ const isAuthenticated = async (
     } else if (req.cookies && req.cookies.jwt) {
       token = req.cookies.jwt;
     }
-    console.log(process.env.JWT_SECRET_KEY)
+    console.log(process.env.JWT_SECRET_KEY);
     if (!token) {
       return next(new AppError('Unauthorized', 401));
     }
@@ -26,11 +26,9 @@ const isAuthenticated = async (
       process.env.JWT_SECRET_KEY as string
     ) as { id: string; iat: number };
     const currentTime = Math.floor(Date.now() / 1000);
-    console.log(token)
-    console.log(decodedToken)
-    
-    // console.log(currentTime);
-    // console.log(decodedToken.iat);
+    console.log(token);
+    console.log(decodedToken);
+
     if (decodedToken.iat > currentTime) {
       return next(new AppError('Token expired', 401));
     }
@@ -46,31 +44,43 @@ const isAuthenticated = async (
 
     next();
   } catch (err: any) {
-    next(new AppError(err.message, 500)); 
+    next(new AppError(err.message, 500));
   }
 };
 
 const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (!req.cookies.jwt) {
-      return next(new AppError('kindly login or sign up', 401));
-    } else if (req.cookies.jwt) {
-      const decodedToken = jwt.verify(
-        req.cookies.jwt,
-        process.env.JWT_SECRET_KEY as string
-      ) as { id: string; iat: number; exp: number };
-      const currentTime = Math.floor(Date.now() / 1000);
-      const user = await userModel.findById(decodedToken.id);
-
-      if (user && decodedToken.iat < currentTime) res.locals.user = user;
-      return next();
+      return next(new AppError('Please log in or sign up', 401));
     }
 
+    const decodedToken = jwt.verify(
+      req.cookies.jwt,
+      process.env.JWT_SECRET_KEY as string
+    ) as JwtPayload;
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (
+      !decodedToken ||
+      decodedToken.exp === undefined ||
+      decodedToken.iat === undefined
+    ) {
+      return next(new AppError('Invalid token', 401));
+    }
+    if (decodedToken.exp < currentTime) {
+      return next(new AppError('Session expired, please log in again', 401));
+    }
+
+    const user = await userModel.findById(decodedToken.id);
+
+    if (!user) {
+      return next(new AppError('User not found', 401));
+    }
+
+    res.locals.user = user;
     next();
-  } catch (err: any) {
-    next(new AppError(err, 500));
+  } catch (err) {
+    return next(new AppError('Authentication failed', 401));
   }
 };
-
 
 export { isAuthenticated, isLoggedIn };

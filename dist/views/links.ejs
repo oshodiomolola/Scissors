@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="/styles/shortenUrl.css" />
+    <link
+      rel="stylesheet"
+      href="/styles/header.css" />
+    <link
+      href="https://fonts.cdnfonts.com/css/gilroy-bold?styles=20876,20878,20879"
+      rel="stylesheet" />
+
+    <title>All my links</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a
+          href="/views/shortenUrl"
+          class="nav-link"
+          >Shorten</a
+        >
+        <a
+          href="/views/myLinks"
+          class="nav-link"
+          >See all Links</a
+        >
+        <a
+          href="/views/Stats"
+          class="nav-link"
+          >Stats</a
+        >
+      </nav>
+    </header>
+    <ul class="link-container">
+      <span class="loader"></span>
+    </ul>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script
+      type="module"
+      src="/client/viewAllLinks.js"></script>
+  </body>
+</html>

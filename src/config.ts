@@ -1,4 +1,4 @@
-export {mongoDbConnection}
+export { mongoDbConnection };
 
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -14,5 +14,5 @@ const mongoDbConnection = (): void => {
   mongoose.connection.on('error', (err) => {
     console.log(`An error has occurred: ${err}`);
   });
-  }
+};
 

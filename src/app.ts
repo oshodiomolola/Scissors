@@ -2,19 +2,16 @@ import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import qrcodeController from './controllers/qrcodeController';
-
+import cookieParser = require('cookie-parser');
 
 dotenv.config();
 
 function createServer() {
   const server = express();
 
-// server.get('/', (req: Request, res: Response) => {
-//     res.send('Yaaaay!! get your short url with Scissors!!!');
-//   });
-
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
+  server.use(cookieParser());
 
   server.get('/qrcode', qrcodeController.generateQRCode);
 
@@ -22,7 +19,3 @@ function createServer() {
 }
 
 export default createServer;
-
-
-
-

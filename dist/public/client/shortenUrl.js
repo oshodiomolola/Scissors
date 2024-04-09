@@ -1,138 +1,45 @@
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
+const Loader = document.querySelector('.loader');
+const newListContainer = document.querySelector('.newlink-container');
+const formEl = document.querySelector('#urlForm');
 
-if (!token) {
-  console.error("Token not found in localStorage.");
-  window.location.href = "/users/qrCode"; // Added quotes around the URL and a semicolon at the end
-}
+formEl.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-console.log(typeof token);
-console.log(token);
-
-async function shortenUrl(event) {
-  event.preventDefault();
   const urlInput = document.querySelector('#urlInput').value.trim();
-  const shortenedUrlElement = document.querySelector('#shortenedUrl'); // Correct ID used
-
-  if (!urlInput) {
-    document.querySelector('#urlInputFeedback').textContent = "URL cannot be empty";
-    return;
-  } else {
-    document.querySelector('#urlInputFeedback').textContent = "";
-  }
-
-  shortenedUrlElement.textContent = 'Shortening URL...';
-  console.log(localStorage.getItem("token"))
+  Loader.textContent = 'Shortening URL...';
 
   try {
-    const response = await fetch("/shorten/createUrl", {
-      method: 'POST',
-      headers: {
-        "Authorization": `Bearer ${token}`, // Authorization header with bearer token
-        "Content-Type": "application/json" // Content type header specifying JSON format
-      },
-      body: JSON.stringify({
-        originalUrl: urlInput, // Request body containing the original URL to be shortened
-      }),
-    });
-  
-    if (!response.ok) {
-      throw new Error("Failed to shorten URL"); // Throw an error if response is not ok
+    const response = await axios.post(
+      '/shorten/createUrl',
+      { originalUrl: urlInput },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const { status, message, newDoc } = response.data;
+
+    if (status === 'success') {
+      const { shortUrl, newUrl } = newDoc;
+
+      const listItem = document.createElement('li');
+      listItem.classList.add('list-child');
+      listItem.innerHTML = `
+        <span class="new-link">New Link :</span>
+        <a href="${newUrl}" class="new-link-a">${shortUrl}</a>
+      `;
+      newListContainer.appendChild(listItem);
+
+      Loader.textContent = '';
+    } else {
+      console.error(message);
     }
-  
-    const data = await response.json(); // Parse JSON response
-    console.log(data); // Log response data
-    shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl; // Update shortened URL element with the shortened URL
   } catch (error) {
-    console.error("Error:", error); // Log any errors that occur during the fetch request
+    console.error('Error:', error);
+    Loader.textContent = '';
   }
-}
-  
-
-  // try {
-  //   const response = await fetch("/shorten/createUrl", {
-  //     method: 'POST',
-  //     headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json"},
-  //     body: JSON.stringify({
-  //       originalUrl: urlInput,
-  //     }),
-  //   });
-
-  //   if (!response.ok) {
-  //     throw new Error("Failed to shorten URL");
-  //   }
-
-  //   const data = await response.json();
-  //   console.log(data)
-  //   shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
-
-    // setTimeout(() => {
-    //   location.assign('/views/qrcode');
-    // }, 1000);
-//   } catch (error) {
-//     // shortenedUrlElement.textContent = 'Error: ' + error.message;
-//     console.log(error)
-//   }
-// }
-
-document.addEventListener('DOMContentLoaded', function() {
-  const formEl = document.querySelector('#urlInput');
-  formEl.addEventListener("submit", shortenUrl);
 });
-
-
-
-
-
-// const token = localStorage.getItem("token");
-
-// if (!token) {
-//   console.error("Token not found in localStorage.");
-//   window.location.href = "/users/qrCode"};
-// console.log(typeof token);
-// console.log(token);
-
-// async function shortenUrl(event) {
-//   event.preventDefault();
-//   const urlInput = document.querySelector('#urlInput').value.trim();
-//   const shortenedUrlElement = document.querySelector('#shortenedUrl'); // Correct ID used
-
-//   if (!urlInput) {
-//     document.querySelector('#urlInputFeedback').textContent = "URL cannot be empty";
-//     return;
-//   } else {
-//     document.querySelector('#urlInputFeedback').textContent = "";
-//   }
-
-//   shortenedUrlElement.textContent = 'Shortening URL...';
-
-//   try {
-//     const response = await fetch("/shorten/createUrl", {
-//       method: 'POST',
-//       headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json"},
-//       body: JSON.stringify({
-//         originalUrl: urlInput,
-//       }),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to shorten URL");
-//     }
-
-//     const data = await response.json();
-//     console.log(data)
-//     shortenedUrlElement.textContent = "Shortened URL: " + data.shortUrl;
-
-//     // setTimeout(() => {
-//     //   location.assign('/views/qrcode');
-//     // }, 1000);
-//   } catch (error) {
-//     // shortenedUrlElement.textContent = 'Error: ' + error.message;
-//     console.log(error)
-//   }
-// }
-
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   const formEl = document.querySelector('#urlInput');
-//   formEl.addEventListener("submit", shortenUrl);
-// })

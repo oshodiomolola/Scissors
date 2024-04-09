@@ -2,43 +2,59 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/styles/shortenUrl.css" />
+    <link
+      rel="stylesheet"
+      href="/styles/shortenUrl.css" />
+      <link
+      rel="stylesheet"
+      href="/styles/header.css" />
     <link
       href="https://fonts.cdnfonts.com/css/gilroy-bold?styles=20876,20878,20879"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
     <title>Shortening URL</title>
   </head>
   <body>
+    <header>
+      <nav>
+        <a href="/views/shortenUrl" class="nav-link">Shorten</a>
+        <a href="/views/myLinks" class="nav-link">See all Links</a>
+        <a href="/views/Stats" class="nav-link">Stats</a>
+      </nav>
+    </header>
     <div class="container">
-      <!-- <form id="yourFormId"></form> -->
-      <form id="urlForm" action="/shorten/createUrl" method="post">
+      
+      <form
+        id="urlForm">
         <div class="input-group">
           <input
-          name="originalUrl"
+            name="originalUrl"
             type="url"
             id="urlInput"
             placeholder="Enter URL to shorten"
-            required
-          />
+            required />
           <button type="submit">Shorten URL</button>
         </div>
       </form>
 
-       <% if (shortUrl) { %> 
-      <div id="shortenedUrl" class="shortened-url">
-        this is my short Url: <a href="http://localhost:8000/shorten/<%= shortUrl %>">http://localhost:8000/shorten/<%= shortUrl %></a>
-      </div>
+   <main>
+    <h1 class="newlink-h1">
+      List of Your new links
+    </h1>
+    <span class="loader"></span>
+    <ul class="newlink-container">
+     
+    </ul>
+   </main>
 
-      <% } else { %>
-      <div id="shortenedUrl" class="shortened-url" style="display: none"></div>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-      <% } %>
-    </div> 
-
-    <script type="module" src="/client/shortenUrl.js"></script>
+    <script
+      type="module"
+      src="/client/shortenUrl.js"></script>
   </body>
 </html>

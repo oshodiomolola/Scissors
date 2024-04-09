@@ -12,7 +12,7 @@ body {
   display: flex;
   margin-bottom: 15px;
 }
-.input-group input[type="url"] {
+.input-group input[type='url'] {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -38,4 +38,16 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   word-break: break-all;
+}
+.new-link {
+  color: #0056b3;
+  font-size: 1.5rem;
+}
+.new-link-a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+.new-link-a :hover {
+  color: orangered;
 }
